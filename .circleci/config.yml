@@ -2,14 +2,9 @@ version: 2.1
 
 jobs:
   ui_tests:
-    machine: true 
+    machine: true
     steps:
-      - checkout 
-      - run:
-          name: Print Working Directory
-          command: |
-            echo "Current working directory:"
-            pwd  # Print the current working directory
+      - checkout
       - run:
           name: Install Node.js
           command: |
@@ -18,30 +13,21 @@ jobs:
       - run:
           name: Install Chrome
           command: |
-            wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-            echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
             sudo apt-get update
             sudo apt-get install -y google-chrome-stable
       - run:
-        name: Install ChromeDriver
-        command: |
-          CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-          wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-          sudo chmod +x /usr/local/bin/chromedriver
-
-      - run:
-          name: Print Working Directory After Setup
+          name: Install ChromeDriver
           command: |
-            echo "Current working directory after setup:"
-            pwd  # Print the working directory after setup
+            CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
+            wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+            unzip chromedriver_linux64.zip
+            sudo mv chromedriver /usr/local/bin/
+            sudo chmod +x /usr/local/bin/chromedriver
       - run:
           name: List Files in TaskQA Directory
           command: |
             cd TaskQA  
-            echo "Listing files in TaskQA directory:"
-            ls -al  # List files and directories in the TaskQA folder to ensure Page Objects are present
+            ls -al  # List files and directories in the TaskQA folder
       - run:
           name: Install UI test dependencies
           command: |
@@ -51,8 +37,7 @@ jobs:
           name: Run UI tests
           command: |
             cd TaskQA  
-            npx nightwatch  
-
+            npx nightwatch tests
 workflows:
   version: 2
   test_workflow:
