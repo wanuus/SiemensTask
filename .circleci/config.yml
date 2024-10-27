@@ -1,60 +1,42 @@
 version: 2.1
 
+executors:
+  default:
+    docker:
+      - image: circleci/node:14  # Use the appropriate Node.js version
+    resource_class: large  # Increase resource class if necessary
+
 jobs:
-  ui_tests:
-    machine: true
+  build:
     steps:
       - checkout
       - run:
-          name: Install Node.js
-          command: |
-            curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-            sudo apt-get install -y nodejs
-      - run:
-          name: Install Chrome
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y google-chrome-stable
-      - run:
-          name: Install ChromeDriver
-          command: |
-            CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-            wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
-            unzip chromedriver_linux64.zip
-            sudo mv chromedriver /usr/local/bin/
-            sudo chmod +x /usr/local/bin/chromedriver
+          name: Install Dependencies
+          command: npm install
+
+  run-ui-tests:
+    steps:
+      - checkout
       - run:
           name: Start ChromeDriver
           command: |
+            npm install chromedriver
             chromedriver --port=9515 &
-            sleep 5  # Give ChromeDriver a few seconds to start
       - run:
-          name: List Installed ChromeDriver Version
-          command: chromedriver --version
-      - run:
-          name: List Installed Chrome Version
-          command: google-chrome --version
-      - run:
-          name: List Files in TaskQA Directory
-          command: |
-            cd TaskQA  
-            ls -al  # List files and directories in the TaskQA folder
-      - run:
-          name: Install UI test dependencies
-          command: |
-            cd TaskQA  
-            npm install
-      - run:
-          name: Run UI tests
-          command: |
-            cd TaskQA  
-            npx nightwatch tests
+          name: Run UI Tests
+          command: npm test
+          environment:
+            NODE_ENV: test  # Add any required environment variables here
 
 workflows:
   version: 2
-  test_workflow:
+  test:
     jobs:
-      - ui_tests
+      - build
+      - run-ui-tests:
+          requires:
+            - build
+
 
 
 #   api_tests:
