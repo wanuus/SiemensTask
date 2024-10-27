@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="1">
+
+  <testsuite name="contactTest2"
+    errors="0" failures="0" hostname="" id="" package="contactTest2" skipped="0"
+    tests="1" time="56.89" timestamp="">
+  
+    <testcase name="My first test case using Page Object" classname="contactTest2" time="28.44" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+
+  
+
+    
+
+  
+  </testsuite>
+</testsuites>

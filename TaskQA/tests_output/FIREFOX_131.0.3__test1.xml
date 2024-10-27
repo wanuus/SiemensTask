@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="1"
+            tests="1">
+
+  <testsuite name="test1"
+    errors="0" failures="1" hostname="" id="" package="test1" skipped="0"
+    tests="1" time="0.1410" timestamp="">
+  
+    <testcase name="My first test case using Page Object" classname="test1" time="0.06700" assertions="1">  <failure message="browser.page.page1 is not a function">TypeError: browser.page.page1 is not a function
+    at My first test case using Page Object (D:\MyProjects\TaskQA\tests\test1.js:6:42)</failure>
+
+    
+    </testcase>
+  
+
+  
+
+    
+
+  
+  </testsuite>
+</testsuites>

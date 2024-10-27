@@ -1,0 +1,25 @@
+{
+  "devDependencies": {
+    "chromedriver": "^129.0.4",
+    "jest": "^29.7.0",
+    "nightwatch": "^3.8.0",
+    "supertest": "^7.0.0"
+  },
+  "dependencies": {
+    "create-react-app": "^5.0.1",
+    "mock-user-auth": "^1.0.15"
+  },
+  "name": "taskqa",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "nightwatch",
+    "dev": "nodemon ./node_modules/mock-user-auth/bin/www.js" 
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+  
+  
+}
