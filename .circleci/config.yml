@@ -1,45 +1,87 @@
+# version: 2.1
+
+# jobs:
+#   ui_tests:
+#     machine: true 
+#     steps:
+#       - checkout 
+#       - run:
+#           name: Install Node.js
+#           command: |
+#             curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+#             sudo apt-get install -y nodejs
+#       - run:
+#           name: Install Chrome
+#           command: |
+#             sudo apt-get update
+#             sudo apt-get install -y google-chrome-stable
+#       - run:
+#           name: Install ChromeDriver
+#           command: |
+#             CHROMEDRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`
+#             wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+#             unzip chromedriver_linux64.zip
+#             sudo mv chromedriver /usr/local/bin/
+#             sudo chmod +x /usr/local/bin/chromedriver
+
+#       - run:
+#           name: List Files in TaskQA Directory
+#           command: |
+#             cd TaskQA  
+#             ls -al  # List files and directories in the TaskQA folder
+#       - run:
+#           name: Install UI test dependencies
+#           command: |
+#             cd TaskQA  
+#             npm install
+#       - run:
+#           name: Run UI tests
+#           command: |
+#             cd TaskQA  
+#             npx nightwatch  
+
+#   api_tests:
+#     machine: true  
+#     steps:
+#       - checkout 
+#       - run:
+#           name: Install Node.js
+#           command: |
+#             curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+#             sudo apt-get install -y nodejs
+#       - run:
+#           name: List Files in Working Directory
+#           command: ls -al  # List files and directories in the current path
+#       - run:
+#           name: Change Directory to ApiTest
+#           command: |
+#             cd ApiTest  
+#             echo "Current directory: $(pwd)"
+#       - run:
+#           name: Install API test dependencies
+#           command: |
+#             cd ApiTest  
+#             npm install
+#       - run:
+#           name: Run API tests
+#           command: |
+#             cd ApiTest  
+#             npx mocha tests/api --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/api-test-results.xml
+
+# workflows:
+#   version: 2
+#   test_workflow:
+#     jobs:
+#       - ui_tests
+#       - api_tests:
+#           requires:
+#             - ui_tests
+
+
+
 version: 2.1
 
 jobs:
-  ui_tests:
-    machine: true 
-    steps:
-      - checkout 
-      - run:
-          name: Install Node.js
-          command: |
-            curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-            sudo apt-get install -y nodejs
-      - run:
-          name: Install Chrome
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y google-chrome-stable
-      - run:
-          name: Install ChromeDriver
-          command: |
-            CHROMEDRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`
-            wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
-            unzip chromedriver_linux64.zip
-            sudo mv chromedriver /usr/local/bin/
-            sudo chmod +x /usr/local/bin/chromedriver
-
-      - run:
-          name: List Files in TaskQA Directory
-          command: |
-            cd TaskQA  
-            ls -al  # List files and directories in the TaskQA folder
-      - run:
-          name: Install UI test dependencies
-          command: |
-            cd TaskQA  
-            npm install
-      - run:
-          name: Run UI tests
-          command: |
-            cd TaskQA  
-            npx nightwatch  
-
   api_tests:
     machine: true  
     steps:
@@ -72,7 +114,4 @@ workflows:
   version: 2
   test_workflow:
     jobs:
-      - ui_tests
-      - api_tests:
-          requires:
-            - ui_tests
+      - api_tests
