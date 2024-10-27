@@ -1,7 +1,8 @@
 version: 2.1
 
 jobs:
-  test:
+ 
+  ui_tests:
     docker:
       - image: circleci/node:latest
     steps:
@@ -12,6 +13,16 @@ jobs:
       - run:
           name: Run UI tests
           command: npx nightwatch
+          
+  
+  api_tests:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
       - run:
           name: Run API tests
           command: |
@@ -21,4 +32,7 @@ workflows:
   version: 2
   test_workflow:
     jobs:
-      - test
+      - ui_tests
+      - api_tests:
+          requires:
+            - ui_tests 
