@@ -1,51 +1,40 @@
 version: 2.1
 
 jobs:
-  ui_tests:
-    machine: true 
+  # Job to run UI tests
+  run_ui_tests:
+    docker:
+      - image: circleci/node:latest  # Use a Node.js Docker image
+    working_directory: ~/TaskQA 
     steps:
-      - checkout 
+      - checkout  # Checkout the code from the repository
       - run:
-          name: Install Node.js
-          command: |
-            curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-            sudo apt-get install -y nodejs
+          name: Install UI Test Dependencies
+          command: npm install  # Install dependencies for UI tests
       - run:
-          name: Install UI test dependencies
-          command: |
-            cd TaskQA  
-            npm install
-      - run:
-          name: Run UI tests
-          command: |
-            cd TaskQA  
-            npx nightwatch  
+          name: Run UI Tests
+          command: npx nightwatch  # Run Nightwatch tests
 
-  api_tests:
-    machine: true  
+  # Job to run API tests
+  run_api_tests:
+    docker:
+      - image: circleci/node:latest  # Use a Node.js Docker image
+    working_directory: ~/ApiTest  # Working directory for API tests
     steps:
-      - checkout 
+      - checkout  # Checkout the code from the repository
       - run:
-          name: Install Node.js
-          command: |
-            curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-            sudo apt-get install -y nodejs
+          name: Install API Test Dependencies
+          command: npm install  # Install dependencies for API tests
       - run:
-          name: Install API test dependencies
-          command: |
-            cd ApiTest  
-            npm install
-      - run:
-          name: Run API tests
-          command: |
-            cd ApiTest  
-            npx mocha tests/api --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/api-test-results.xml
+          name: Run API Tests
+          command: npx mocha tests/api --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/api-test-results.xml  # Run Mocha tests
 
+# Define workflows to run jobs in sequence
 workflows:
   version: 2
-  test_workflow:
+  test:
     jobs:
-      - ui_tests
-      - api_tests:
+      - run_ui_tests  # Run UI tests first
+      - run_api_tests:
           requires:
-            - ui_tests 
+            - run_ui_tests  # Only run API tests after UI tests succeed
