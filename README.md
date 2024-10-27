@@ -1,6 +1,6 @@
 ## Siemens Task
 
-[![CircleCI](https://circleci.com/SiemensTask/wanuus/SiemensTask.svg?style=svg)](https://circleci.com/SiemensTask/wanuus/SiemensTask)
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/FxbnK9jhyS3JknyboDzJPo/S4yknMYmvJXcP4PnmrKX6K/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/FxbnK9jhyS3JknyboDzJPo/S4yknMYmvJXcP4PnmrKX6K/tree/main)
 
 ### Overview
 This project focuses on automating testing tasks for the "My Store" website. It encompasses two primary areas:
