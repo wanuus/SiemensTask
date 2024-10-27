@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.181" tests="13" failures="0">
+  <testsuite name="Root Suite" timestamp="2024-10-27T11:46:06" tests="0" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="POST /api/v1/auth" timestamp="2024-10-27T11:46:06" tests="2" file="D:\MyProjects\Bassma1\test\auth.test.js" time="0.132" failures="0">
+    <testcase name="POST /api/v1/auth should authenticate a user and return a token for valid credentials" time="0.121" classname="should authenticate a user and return a token for valid credentials">
+    </testcase>
+    <testcase name="POST /api/v1/auth should return an error for invalid credentials" time="0.008" classname="should return an error for invalid credentials">
+    </testcase>
+  </testsuite>
+  <testsuite name="DELETE /api/v1/all-users" timestamp="2024-10-27T11:46:06" tests="2" file="D:\MyProjects\Bassma1\test\deleteAllUsers.test.js" time="0.011" failures="0">
+    <testcase name="DELETE /api/v1/all-users should delete all users for a valid admin key" time="0.005" classname="should delete all users for a valid admin key">
+    </testcase>
+    <testcase name="DELETE /api/v1/all-users should return an error for an invalid admin key" time="0.004" classname="should return an error for an invalid admin key">
+    </testcase>
+  </testsuite>
+  <testsuite name="DELETE /api/v1/users" timestamp="2024-10-27T11:46:06" tests="2" file="D:\MyProjects\Bassma1\test\deleteUser.test.js" time="0.009" failures="0">
+    <testcase name="DELETE /api/v1/users should delete user for a valid token" time="0.004" classname="should delete user for a valid token">
+    </testcase>
+    <testcase name="DELETE /api/v1/users should return an error for an invalid token" time="0.004" classname="should return an error for an invalid token">
+    </testcase>
+  </testsuite>
+  <testsuite name="GET /api/v1/users" timestamp="2024-10-27T11:46:06" tests="2" file="D:\MyProjects\Bassma1\test\getUser.test.js" time="0.008" failures="0">
+    <testcase name="GET /api/v1/users should return user information for a valid token" time="0.004" classname="should return user information for a valid token">
+    </testcase>
+    <testcase name="GET /api/v1/users should return an error for an invalid token" time="0.004" classname="should return an error for an invalid token">
+    </testcase>
+  </testsuite>
+  <testsuite name="PATCH /api/v1/users" timestamp="2024-10-27T11:46:07" tests="3" file="D:\MyProjects\Bassma1\test\patchUser.test.js" time="0.012" failures="0">
+    <testcase name="PATCH /api/v1/users should update user information for a valid token" time="0.004" classname="should update user information for a valid token">
+    </testcase>
+    <testcase name="PATCH /api/v1/users should return an error for an invalid token" time="0.004" classname="should return an error for an invalid token">
+    </testcase>
+    <testcase name="PATCH /api/v1/users should return an error for missing fields" time="0.003" classname="should return an error for missing fields">
+    </testcase>
+  </testsuite>
+  <testsuite name="POST /api/v1/users" timestamp="2024-10-27T11:46:07" tests="2" file="D:\MyProjects\Bassma1\test\user.test.js" time="0.007" failures="0">
+    <testcase name="POST /api/v1/users should register a user and return a token for valid credentials" time="0.003" classname="should register a user and return a token for valid credentials">
+    </testcase>
+    <testcase name="POST /api/v1/users should return an error for invalid registration data" time="0.003" classname="should return an error for invalid registration data">
+    </testcase>
+  </testsuite>
+</testsuites>

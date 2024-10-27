@@ -1,0 +1,23 @@
+{
+  "name": "wahid1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./node_modules/mock-user-auth/bin/www.js",
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "express": "^4.21.1",
+    "mocha": "^10.7.3",
+    "mocha-junit-reporter": "^2.2.1",
+    "supertest": "^7.0.0"
+  },
+  "dependencies": {
+    "mock-user-auth": "^1.0.15"
+  }
+}
