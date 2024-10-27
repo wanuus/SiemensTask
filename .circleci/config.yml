@@ -2,23 +2,14 @@ version: 2.1
 
 jobs:
   ui_tests:
-    machine: true
+    machine: true 
     steps:
-      - checkout
+      - checkout 
       - run:
           name: Install Node.js
           command: |
             curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
             sudo apt-get install -y nodejs
-      - run:
-          name: Install Chrome
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y wget gnupg
-            wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-            echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
-            sudo apt-get update
-            sudo apt-get install -y google-chrome-stable
       - run:
           name: Install ChromeDriver
           command: |
@@ -41,12 +32,12 @@ jobs:
           name: Run UI tests
           command: |
             cd TaskQA  
-            npx nightwatch
+            npx nightwatch  
 
   api_tests:
-    machine: true
+    machine: true  
     steps:
-      - checkout
+      - checkout 
       - run:
           name: Install Node.js
           command: |
@@ -54,7 +45,7 @@ jobs:
             sudo apt-get install -y nodejs
       - run:
           name: List Files in Working Directory
-          command: ls -al  
+          command: ls -al  # List files and directories in the current path
       - run:
           name: Change Directory to ApiTest
           command: |
