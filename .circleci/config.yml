@@ -2,15 +2,22 @@ version: 2.1
 
 jobs:
   ui_tests:
-    docker:
-      - image: circleci/node:16  # Use CircleCI's Node.js Docker image
+    machine: true
     steps:
       - checkout
       - run:
-          name: Install Dependencies
+          name: Install Node.js
+          command: |
+            curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+      - run:
+          name: Install Chrome
           command: |
             sudo apt-get update
             sudo apt-get install -y google-chrome-stable
+      - run:
+          name: Install ChromeDriver
+          command: |
             CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
             wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
             unzip chromedriver_linux64.zip
@@ -20,7 +27,7 @@ jobs:
           name: Start ChromeDriver
           command: |
             chromedriver --port=9515 &
-            sleep 5  # Give ChromeDriver time to start
+            sleep 5  # Give ChromeDriver a few seconds to start
       - run:
           name: List Installed ChromeDriver Version
           command: chromedriver --version
@@ -28,12 +35,19 @@ jobs:
           name: List Installed Chrome Version
           command: google-chrome --version
       - run:
-          name: Install UI Test Dependencies
+          name: List Files in TaskQA Directory
           command: |
+            cd TaskQA  
+            ls -al  # List files and directories in the TaskQA folder
+      - run:
+          name: Install UI test dependencies
+          command: |
+            cd TaskQA  
             npm install
       - run:
-          name: Run UI Tests
+          name: Run UI tests
           command: |
+            cd TaskQA  
             npx nightwatch tests
 
 workflows:
@@ -41,7 +55,6 @@ workflows:
   test_workflow:
     jobs:
       - ui_tests
-
 
 
 #   api_tests:
