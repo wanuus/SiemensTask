@@ -2,30 +2,43 @@ version: 2.1
 
 jobs:
   ui_tests:
-    docker:
-      - image: circleci/node:latest
-    working_directory: ~/project
+    machine: true 
     steps:
-      - checkout
+      - checkout 
       - run:
-          name: Install dependencies
-          command: npm install
+          name: Install Node.js
+          command: |
+            curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+      - run:
+          name: Install UI test dependencies
+          command: |
+            cd TaskQA  
+            npm install
       - run:
           name: Run UI tests
-          command: npx nightwatch -c nightwatch.conf.js 
+          command: |
+            cd TaskQA  
+            npx nightwatch  
 
   api_tests:
-    docker:
-      - image: circleci/node:latest
-    working_directory: ~/project
+    machine: true  
     steps:
-      - checkout
+      - checkout 
       - run:
-          name: Install dependencies
-          command: npm install
+          name: Install Node.js
+          command: |
+            curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+      - run:
+          name: Install API test dependencies
+          command: |
+            cd ApiTest  
+            npm install
       - run:
           name: Run API tests
           command: |
+            cd ApiTest  
             npx mocha tests/api --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/api-test-results.xml
 
 workflows:
@@ -35,4 +48,4 @@ workflows:
       - ui_tests
       - api_tests:
           requires:
-            - ui_tests  
+            - ui_tests 
