@@ -13,12 +13,12 @@ jobs:
       - run:
           name: Install UI test dependencies
           command: |
-            cd /TaskQA  
+            cd TaskQA  
             npm install
       - run:
           name: Run UI tests
           command: |
-            cd /TaskQA  
+            cd TaskQA  
             npx nightwatch  
 
   api_tests:
@@ -33,12 +33,12 @@ jobs:
       - run:
           name: Install API test dependencies
           command: |
-            cd /ApiTest  
+            cd ApiTest  
             npm install
       - run:
           name: Run API tests
           command: |
-            cd /ApiTest  
+            cd ApiTest  
             npx mocha tests/api --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/api-test-results.xml
 
 workflows:
