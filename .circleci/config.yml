@@ -61,4 +61,4 @@ workflows:
       - ui_tests
       - api_tests:
           requires:
-            - ui_tests
+            - ui_tests
