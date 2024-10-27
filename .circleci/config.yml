@@ -24,6 +24,17 @@ jobs:
             sudo mv chromedriver /usr/local/bin/
             sudo chmod +x /usr/local/bin/chromedriver
       - run:
+          name: Start ChromeDriver
+          command: |
+            chromedriver --port=9515 &
+            sleep 5  # Give ChromeDriver a few seconds to start
+      - run:
+          name: List Installed ChromeDriver Version
+          command: chromedriver --version
+      - run:
+          name: List Installed Chrome Version
+          command: google-chrome --version
+      - run:
           name: List Files in TaskQA Directory
           command: |
             cd TaskQA  
@@ -38,11 +49,13 @@ jobs:
           command: |
             cd TaskQA  
             npx nightwatch tests
+
 workflows:
   version: 2
   test_workflow:
     jobs:
-      - ui_tests 
+      - ui_tests
+
 
 #   api_tests:
 #     machine: true  
