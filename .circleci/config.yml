@@ -108,7 +108,7 @@ jobs:
           name: Run API tests
           command: |
             cd ApiTest  
-            npx mocha tests --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/api-test-results.xml
+            npx mocha test --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/api-test-results.xml
 
 workflows:
   version: 2
