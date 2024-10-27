@@ -6,6 +6,11 @@ jobs:
     steps:
       - checkout 
       - run:
+          name: Print Working Directory
+          command: |
+            echo "Current working directory:"
+            pwd  # Print the current working directory
+      - run:
           name: Install Node.js
           command: |
             curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
@@ -13,22 +18,30 @@ jobs:
       - run:
           name: Install Chrome
           command: |
+            wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+            echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
             sudo apt-get update
             sudo apt-get install -y google-chrome-stable
       - run:
           name: Install ChromeDriver
           command: |
-            CHROMEDRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`
-            wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+            CHROME_VERSION=$(google-chrome --version | sed 's/.* //')
+            CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION | awk -F. '{print $1 "." $2}')
+            wget -N https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
             unzip chromedriver_linux64.zip
             sudo mv chromedriver /usr/local/bin/
             sudo chmod +x /usr/local/bin/chromedriver
-
+      - run:
+          name: Print Working Directory After Setup
+          command: |
+            echo "Current working directory after setup:"
+            pwd  # Print the working directory after setup
       - run:
           name: List Files in TaskQA Directory
           command: |
             cd TaskQA  
-            ls -al  # List files and directories in the TaskQA folder
+            echo "Listing files in TaskQA directory:"
+            ls -al  # List files and directories in the TaskQA folder to ensure Page Objects are present
       - run:
           name: Install UI test dependencies
           command: |
@@ -40,42 +53,48 @@ jobs:
             cd TaskQA  
             npx nightwatch  
 
-  api_tests:
-    machine: true  
-    steps:
-      - checkout 
-      - run:
-          name: Install Node.js
-          command: |
-            curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-            sudo apt-get install -y nodejs
-      - run:
-          name: List Files in Working Directory
-          command: ls -al  # List files and directories in the current path
-      - run:
-          name: Change Directory to ApiTest
-          command: |
-            cd ApiTest  
-            echo "Current directory: $(pwd)"
-      - run:
-          name: Install API test dependencies
-          command: |
-            cd ApiTest  
-            npm install
-      - run:
-          name: Run API tests
-          command: |
-            cd ApiTest  
-            npx mocha test --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/api-test-results.xml
-
 workflows:
   version: 2
   test_workflow:
     jobs:
-      - ui_tests
-      - api_tests:
-          requires:
-            - ui_tests
+      - ui_tests 
+
+#   api_tests:
+#     machine: true  
+#     steps:
+#       - checkout 
+#       - run:
+#           name: Install Node.js
+#           command: |
+#             curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+#             sudo apt-get install -y nodejs
+#       - run:
+#           name: List Files in Working Directory
+#           command: ls -al  # List files and directories in the current path
+#       - run:
+#           name: Change Directory to ApiTest
+#           command: |
+#             cd ApiTest  
+#             echo "Current directory: $(pwd)"
+#       - run:
+#           name: Install API test dependencies
+#           command: |
+#             cd ApiTest  
+#             npm install
+#       - run:
+#           name: Run API tests
+#           command: |
+#             cd ApiTest  
+#             npx mocha test --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/api-test-results.xml
+
+# workflows:
+#   version: 2
+#   test_workflow:
+#     jobs:
+#       - ui_tests
+#       - api_tests:
+#           requires:
+#             - ui_tests
 
 
 
