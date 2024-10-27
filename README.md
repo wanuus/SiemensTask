@@ -1,57 +1,66 @@
-# SiemensTask
+## Siemens Task
+### Overview
+This project focuses on automating testing tasks for the "My Store" website. It encompasses two primary areas:
 
-Overview
-This project consists of two main tasks: UI testing using the Nightwatch framework and API testing using Mocha. The UI task focuses on validating user interactions on the website, while the API task ensures the backend services are functioning correctly.
+- *UI Testing:* Validates critical user interactions on the website, ensuring a smooth user experience.
+- *API Testing:* Verifies backend services are correctly functioning, enhancing system reliability.
 
-Prerequisites
-Node.js: Ensure that Node.js is installed on your machine. Use the latest version.
-JavaScript: Make sure that JavaScript is enabled and properly configured.
+By implementing UI testing with NightwatchJS and API testing with Mocha, this project ensures both frontend and backend components meet the required quality standards.
 
-*UI Testing Steps*
+### Prerequisites
+- Node.js: Ensure Node.js is installed (use the latest version). Download it from the official website.
+- JavaScript: Make sure JavaScript is enabled and properly configured.
+### Installation Steps
+1. Download Node.js: Install Node.js if not already installed.
 
-Task Initialization
-Download Node.js: Install Node.js from the official website.
-Verify Installation: Run the following command in your terminal to ensure that Node.js is installed correctly:
-Test Cases:
-1. Contact Us
-Test Case 1: Ensure form cannot be submitted if required fields are empty.
-Action: Identify CSS selectors for form elements.
-Issue: Dropdown element was not visible, resolved by making it clickable.
+2. Run the following command to confirm the installation:
+`bash
+node -v
+`
+3. Install Project Dependencies: Navigate to the project directory and run:
+`bash
+npm install
+`
+1. ### UI Testing with Nightwatch
+- *POM Setup:* Organized selectors in Page Objects (e.g., Contact Us form, Search).
+- *Key Tests*
+    - *Contact Us:* Required fields validation, dropdown visibility fixed.
+    - *Search:* Tested with "dress," resolved Enter button issue.
 
-Implementation:
-Transitioned from hardcoded selectors to a Page Object Model for better code organization and readability.
-Test Completion: All required fields were validated successfully.
+*Run UI Tests:* 
+bash
+npx nightwatch
 
-3. Search for Dress
-Implemented directly using the Page Object Model.
-Issue: Encountered a bug with the "Enter" button trigger, which was resolved.
+HTML Report: Located in the reports folder (or configured output_folder).
 
-Summary of UI Testing
-Four test cases were successfully executed.
-Generated an HTML report of the results.
-Documented bugs and steps for future reference.
+2. ### Manual Testing
+- *Objective:* Cover additional edge cases not included in automation.
+- *Test Scenarios:* Created approximately 15 scenarios for critical user flows and edge cases.
+- *Execution:* Compared outcomes with expected behavior to verify UI consistency and functionality.
 
-Manual Testing
-Conducted manual testing by opening the website and writing scenarios with expected outcomes.
-Created approximately 15 test scenarios.
+3. ### API Testing with Mocha
+- *Authentication Routes:* Validated success/failure cases.
+- *Additional Routes:* Added PATCH route testing.
 
-*API Testing Steps*
+*Run API Tests:*
+bash
+mocha tests/api
 
-Task Initialization
-Select Test Runner: Chose Mocha for running API tests.
-Resolve Configuration Issues: Handled errors related to dependencies and configuration for the testing environment.
-Test Cases
-1. Authentication Routes
-Validated both valid and invalid scenarios to ensure robust authentication handling.
 
-3. Other Routes
-Implemented tests for each route, ensuring all functionality was covered.
-Patch Route: Added a missing test case, which was successfully handled.
+*Generating an XML Report*
 
-Summary of API Testing
-Generated an XML report for all 13 passed test cases.
-All tests were executed successfully.
+*Install mocha-junit-reporter:*
 
-Next Steps
-Upload the project to GitHub.
-Implement CircleCI for continuous integration and deployment.
+`bash
+npm install mocha-junit-reporter --save-dev
+`
+*Run API tests with XML reporting*
+
+bash
+npx mocha tests/api --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/api-test-results.xml
+
+4. ### Continuous Integration (CI) with CircleCI
+The CircleCI pipeline includes two steps:
+- *UI Testing:* Runs the NightwatchJS tests.
+
+- *API Testing:* Runs the Mocha tests with XML reporting
