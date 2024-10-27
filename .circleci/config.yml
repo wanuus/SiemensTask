@@ -9,7 +9,7 @@ jobs:
           name: Print Working Directory
           command: |
             echo "Current working directory:"
-            pwd  # Print the current working directory
+            pwd
       - run:
           name: Install Node.js
           command: |
@@ -25,23 +25,26 @@ jobs:
       - run:
           name: Install ChromeDriver
           command: |
-            CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-            wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+            CHROME_VERSION=$(google-chrome --version | sed 's/.* //')
+            CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION | awk -F. '{print $1 "." $2}')
+            wget -N https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
             unzip chromedriver_linux64.zip
             sudo mv chromedriver /usr/local/bin/
             sudo chmod +x /usr/local/bin/chromedriver
-
       - run:
-          name: Print Working Directory After Setup
+          name: Verify ChromeDriver Installation
           command: |
-            echo "Current working directory after setup:"
-            pwd  # Print the working directory after setup
+            chromedriver --version
+      - run:
+          name: Check ChromeDriver Path
+          command: |
+            which chromedriver
       - run:
           name: List Files in TaskQA Directory
           command: |
             cd TaskQA  
             echo "Listing files in TaskQA directory:"
-            ls -al  # List files and directories in the TaskQA folder to ensure Page Objects are present
+            ls -al
       - run:
           name: Install UI test dependencies
           command: |
@@ -51,13 +54,13 @@ jobs:
           name: Run UI tests
           command: |
             cd TaskQA  
-            npx nightwatch  
+            npx nightwatch --config nightwatch.conf.js
 
 workflows:
   version: 2
   test_workflow:
     jobs:
-      - ui_tests 
+      - ui_tests
 
 #   api_tests:
 #     machine: true  
